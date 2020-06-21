@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input test suite Snapshot 1`] = `
+<div>
+  <div
+    class="css-19yda7x"
+  >
+    <div
+      class="css-fe2xgz"
+    >
+      <input
+        class="css-1a8r2fa"
+        data-testid="input-styled"
+        placeholder="test"
+        value="test"
+      />
+    </div>
+  </div>
+</div>
+`;

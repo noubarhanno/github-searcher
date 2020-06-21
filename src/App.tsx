@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Router, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import Search from './pages/Search';
+import Users from './pages/Users';
+import Repos from './pages/Repos';
+import configureStore from './store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Flex } from 'reflexbox';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FunctionComponent<any> = () => {
+    const { store, persistor } = configureStore({});
+    const history = createBrowserHistory();
+    return (
+        <Provider store={store}>
+            <Router history={history}>
+                <PersistGate persistor={persistor}>
+                    <Flex as="main" flex={1} flexDirection="column" padding="40px">
+                        <Switch>
+                            <Route exact component={Search} path="/" />
+                            <Route component={Users} path="/users" />
+                            <Route component={Repos} path="/repositories" />
+                        </Switch>
+                    </Flex>
+                </PersistGate>
+            </Router>
+        </Provider>
+    );
+};
 
 export default App;

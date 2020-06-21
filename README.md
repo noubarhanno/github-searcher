@@ -1,44 +1,67 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Tradeling Code challenge
 
-## Available Scripts
+#### Install dependencies
 
-In the project directory, you can run:
+```bash
+yarn install
+```
 
-### `yarn start`
+#### Building the files
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+yarn build
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### start the development server
 
-### `yarn test`
+```bash
+yarn start
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Run Test
 
-### `yarn build`
+tools used for testing
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   [react-mock-store](https://www.npmjs.com/package/redux-mock-store)
+-   [testing-library/react](https://testing-library.com/docs/react-testing-library/intro)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```bash
+yarn test
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Solution
 
-### `yarn eject`
+this is an integration app with github to fetch `users` and `repositories` from `github API` you can refer to Please refer to the [github developer](https://developer.github.com/v3/) for more details about the implementation the project data is cached in `redux store` and persiste using `redux-persist` only `users and repositories are persisted` there are three pages mainly one for handling the search control and one for handling users fetching and one for handling repos fetching
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### users page and repos
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+there are two network request for fetching matched users with the search term and one with multiple network request to fetch user details using
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+ axios.all
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+and one single request to fetch repos
+if the search term is exist in redux no more api calls will be executed
+a debounce will return a function that will be delayed every key change in the input , only once you finish typing and no matched search term in redux then it will start the API call with the standard process (start, error, end)
 
-## Learn More
+## Notes for runing the app
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+in order to get the app running , you need to replace the github api token inside `.env` the tolen will be injected in the authorization header to get more `rate-limit`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   you can create a testing token which gonna give you little more `rate-limit` or you can skip it to have very minimum `rate-limit`
+
+## Routing
+
+this project has been developed to be multipages supported using [react-router](https://reacttraining.com/react-router/web/guides/quick-start)
+
+## tools
+
+-   [redux-persist](https://github.com/rt2zz/redux-persist) - to persist your redux store
+-   [Redux](https://redux.js.org/) - Manage your state
+-   [Axios](https://github.com/axios/axios) - API calls
+-   [Typescript](https://www.typescriptlang.org/)
+-   [emotion](https://emotion.sh/)
+-   [styled-system](https://styled-system.com/)
+-   [reflexbox](https://rebassjs.org/reflexbox/)
+-   [Prettier](https://prettier.io/) on staged files
